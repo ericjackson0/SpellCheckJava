@@ -123,6 +123,7 @@ public class SpellCheck {
 	
 	/**
 	 * Check the dictionary for the specified word.
+	 * 
 	 * @param word the word to look for
 	 * @return the found or suggested word, or "Couldn't find your word!" if nothing is found
 	 */
@@ -170,6 +171,7 @@ public class SpellCheck {
 	
 	/**
 	 * Checks the dictionary for the word.
+	 * 
 	 * @param word the word to search for
 	 * @return true if the word is found, false otherwise
 	 */
@@ -188,6 +190,7 @@ public class SpellCheck {
 	/**
 	 * Checks the Levenshtein distance between the word and all words in the dictionary. Then,
 	 * it checks the number of matching letters and returns a result based on that check.
+	 * 
 	 * @param word the word to be found
 	 * @return true if we found some possible results, false otherwise
 	 */
@@ -214,6 +217,7 @@ public class SpellCheck {
 
 	/**
 	 * Check to see if the word has any misplaced letters.
+	 * 
 	 * @param word the word to be found
 	 * @return true if we found some possible results, false otherwise
 	 */
@@ -233,6 +237,7 @@ public class SpellCheck {
 
 	/**
 	 * Check to see if the word has any misplaced vowels.
+	 * 
 	 * @param word the word to be found
 	 * @return true if we found some possible results, false otherwise
 	 */
@@ -257,6 +262,7 @@ public class SpellCheck {
 
 	/**
 	 * Checks for best possible matches between the word and the list of possible results.
+	 * 
 	 * @param word the word to be found in the dictionary
 	 * @return true if a best match was found, false otherwise
 	 */
@@ -334,6 +340,7 @@ public class SpellCheck {
 
 	/**
 	 * Removes all vowels from a word (including 'y').
+	 * 
 	 * @param word the word to remove vowels from
 	 * @return the vowel-free word
 	 */
@@ -343,6 +350,7 @@ public class SpellCheck {
 
 	/**
 	 * Start the program.
+	 * 
 	 * @param args arguments needed by the program. In this case, the file location
 	 * @throws IOException 
 	 */
@@ -387,11 +395,12 @@ public class SpellCheck {
 	
 	/**
 	 * Helper class to compute the Levenshtein distance between two words.
+	 * 
 	 * @author Wikipedia page for Levenshtein distance!
 	 */
 	private class LevenshteinDistance {
 		/**
-		 * Return the minimum between three variables.
+		 * Return the minimum between three integers.
 		 * @param a
 		 * @param b
 		 * @param c
@@ -403,27 +412,33 @@ public class SpellCheck {
  
         /**
          * Compute the Levenshtein distance between two words.
+         * 
          * @param word1 the first word being compared
          * @param word2 the second word being compared to the first
          * @return the Levenshtein distance between the two words
          */
         public int computeLevenshteinDistance(CharSequence word1, CharSequence word2) {
-                int[][] distance = new int[word1.length() + 1][word2.length() + 1];
+            int[][] distance = new int[word1.length() + 1][word2.length() + 1];
  
-                for (int i = 0; i <= word1.length(); i++)
-                        distance[i][0] = i;
-                for (int j = 1; j <= word2.length(); j++)
-                        distance[0][j] = j;
+            for (int i = 0; i <= word1.length(); i++) {
+            	distance[i][0] = i;
+            }
+            
+            for (int j = 1; j <= word2.length(); j++) {
+            	distance[0][j] = j;
+            }
  
-                for (int i = 1; i <= word1.length(); i++)
-                        for (int j = 1; j <= word2.length(); j++)
-                                distance[i][j] = minimum(
-                                                distance[i - 1][j] + 1,
-                                                distance[i][j - 1] + 1,
-                                                distance[i - 1][j - 1] +
-                                                ((word1.charAt(i - 1) == word2.charAt(j - 1)) ? 0 : 1));
+            for (int i = 1; i <= word1.length(); i++) {
+            	for (int j = 1; j <= word2.length(); j++) {
+            		distance[i][j] = minimum(
+            				distance[i - 1][j] + 1,
+                            distance[i][j - 1] + 1,
+                            distance[i - 1][j - 1] +
+                            ((word1.charAt(i - 1) == word2.charAt(j - 1)) ? 0 : 1));
+            	}
+            }
  
-                return distance[word1.length()][word2.length()];
+            return distance[word1.length()][word2.length()];
         }
 	}
 }
